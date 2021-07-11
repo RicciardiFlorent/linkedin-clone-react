@@ -7,10 +7,19 @@ import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import ChatIcon from '@material-ui/icons/Chat';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout, selectUser } from './features/userSlice';
+import { auth } from './firebase';
 
 
 
 function Header() {
+
+    const dispatch = useDispatch();
+    const logoutOfApp = () => {
+        dispatch(logout());
+        auth.signOut();
+    }
     return (
         <div className='header'>
 
@@ -19,7 +28,7 @@ function Header() {
 
                 <div className="header__search">
                     <SearchIcon/>
-                    <input type="text" />
+                    <input type="text" placeholder="Search" />
                 </div>
             </div>
 
@@ -29,7 +38,9 @@ function Header() {
                 <HeaderOption Icon={BusinessCenterIcon} title='Jobs'/>
                 <HeaderOption Icon={ChatIcon} title='Messaging'/>
                 <HeaderOption Icon={NotificationsIcon} title='Notifications'/>
-                <HeaderOption avatar="https://static.mensup.fr/article/grande/chanel_5.jpg" title="me"/>
+                <HeaderOption onClick={logoutOfApp}
+                 avatar="true"
+                 title="me"/>
             </div>
         </div>
     )
